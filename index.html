@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f3ed" />
+    <title>Goodgifts — Thoughtful book gifts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Goodgifts home"><span class="brand-mark">g</span><span>goodgifts</span></a>
+      <div class="topbar-right"><span class="status-dot"></span><span>Goodreads matchmaker</span><a class="about-link" href="#how-it-works">How it works <span>↗</span></a></div>
+    </header>
+    <main>
+      <section class="hero">
+        <div class="eyebrow"><span class="eyebrow-line"></span>THE RIGHT BOOK, FOR THE RIGHT PERSON</div>
+        <h1>Give a book<br /><em>they'll love.</em></h1>
+        <p class="hero-copy">Goodgifts finds the sweet spot between what you adore and what they're hoping to read next.</p>
+        <div class="hero-decoration" aria-hidden="true"><span class="scribble">✳</span><span class="arrow">↘</span></div>
+      </section>
+      <section class="matcher-card" aria-labelledby="matcher-title">
+        <div class="card-heading"><div><span class="step-label">01 / MATCH</span><h2 id="matcher-title">Tell us who you're gifting for.</h2></div><span class="card-note">Takes about 10 seconds</span></div>
+        <form id="match-form">
+          <div class="field-grid">
+            <label class="field"><span>Your Goodreads profile ID</span><div class="input-wrap"><span class="input-icon">@</span><input id="giver-id" type="text" inputmode="numeric" placeholder="e.g. 4820193" required /></div><small>We'll use your 5-star reads</small></label>
+            <div class="connector" aria-hidden="true">+</div>
+            <label class="field"><span>Their Goodreads profile ID</span><div class="input-wrap"><span class="input-icon">◎</span><input id="recipient-id" type="text" inputmode="numeric" placeholder="e.g. 9182736" required /></div><small>We'll check their wishlist</small></label>
+            <button class="match-button" type="submit"><span>Find their next favorite</span><b>→</b></button>
+          </div>
+          <p class="form-error" id="form-error" role="alert"></p>
+        </form>
+        <div class="privacy-note"><span>⌁</span> We only read public shelves. No passwords, no awkward surprises.</div>
+      </section>
+      <section class="results-section" id="results" aria-live="polite">
+        <div class="results-head"><div><span class="step-label">02 / YOUR SHORTLIST</span><h2>Books with a little <em>meaning.</em></h2></div><div class="results-meta"><span id="result-count">04</span> <span>matches found</span></div></div>
+        <div class="recommendations" id="recommendations"></div>
+        <p class="results-footnote"><span>✦</span> Ranked by your rating, their wishlist position, and shared reader love.</p>
+      </section>
+      <section class="how-it-works" id="how-it-works">
+        <div class="how-intro"><span class="step-label">THE GOOD PART</span><h2>Less guessing.<br /><em>More gifting.</em></h2></div>
+        <div class="how-steps"><div><span>01</span><h3>We find the overlap</h3><p>Your five-star reads meet their wishlist.</p></div><div><span>02</span><h3>We rank the gems</h3><p>Our little algorithm sorts the perfect picks.</p></div><div><span>03</span><h3>You take the credit</h3><p>Choose a book. Look wonderfully thoughtful.</p></div></div>
+      </section>
+    </main>
+    <footer><span class="brand"><span class="brand-mark">g</span><span>goodgifts</span></span><span>Made for meaningful moments.</span><span>© 2024</span></footer>
+    <script src="app.js"></script>
+  </body>
+</html>
