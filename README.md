@@ -24,3 +24,5 @@ const response = await fetch('https://www.goodreads.com/review/list_rss/17475014
 (index):1 Access to fetch at 'https://www.goodreads.com/review/list_rss/17475014?shelf=read' from origin 'http://[::]:4173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
 VM46:1  GET https://www.goodreads.com/review/list_rss/17475014?shelf=read net::ERR_FAILED 200 (OK)
 ```
+
+Read-shelf requests use `sort=rating&order=d` and return only five-star books, stopping pagination when a page has no five-star ratings.

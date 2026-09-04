@@ -48,13 +48,21 @@ async function fetchShelf(userId, shelf) {
     endpoint.searchParams.set("shelf", shelf);
     endpoint.searchParams.set("page", page);
     endpoint.searchParams.set("per_page", "100");
+    if (shelf === "read") {
+      endpoint.searchParams.set("sort", "rating");
+      endpoint.searchParams.set("order", "d");
+    }
     const response = await fetch(endpoint);
     if (!response.ok) throw new Error(`Goodreads returned ${response.status}`);
     const pageItems = parseItems(await response.text());
-    const newItems = pageItems.filter((item) => !seen.has(item.link));
+    const eligibleItems = shelf === "read"
+      ? pageItems.filter((item) => item.rating === 5)
+      : pageItems;
+    const newItems = eligibleItems.filter((item) => !seen.has(item.link));
     newItems.forEach((item) => seen.add(item.link));
     items.push(...newItems);
-    if (pageItems.length < 100 || newItems.length === 0) break;
+    if (pageItems.length < 100 || newItems.length === 0
+      || (shelf === "read" && eligibleItems.length === 0)) break;
   }
 
   cache.set(cacheKey, { items, expires: Date.now() + cacheTtl });
