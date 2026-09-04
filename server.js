@@ -1,37 +1,28 @@
 const http = require("node:http");
 const fs = require("node:fs");
 const path = require("node:path");
+const { XMLParser } = require("fast-xml-parser");
 
 const port = Number(process.env.PORT) || 4173;
 const cacheTtl = 5 * 60 * 1000;
 const cache = new Map();
 const publicRoot = __dirname;
-
-function decodeXml(value = "") {
-  return value
-    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;|&apos;/g, "'");
-}
-
-function field(item, name) {
-  const match = item.match(new RegExp(`<${name}(?:\\s[^>]*)?>([\\s\\S]*?)</${name}>`, "i"));
-  return match ? decodeXml(match[1]).replace(/<[^>]+>/g, "").trim() : "";
-}
+const xmlParser = new XMLParser();
 
 function parseItems(xml) {
-  return [...xml.matchAll(/<item\b[\s\S]*?<\/item>/gi)].map(({ 0: item }) => {
-    const bookId = field(item, "book_id");
+  const parsed = xmlParser.parse(xml);
+  const feedItems = parsed?.rss?.channel?.item || [];
+  const items = Array.isArray(feedItems) ? feedItems : [feedItems];
+
+  return items.map((item) => {
+    const bookId = item.book_id || "";
     return {
-      title: field(item, "title"),
-      author: field(item, "author_name") || field(item, "author"),
-      link: bookId ? `https://www.goodreads.com/book/show/${bookId}` : field(item, "link"),
-      cover: field(item, "book_image_url") || field(item, "image_url"),
-      rating: Number(field(item, "user_rating")) || 0,
-      dateAdded: field(item, "user_date_added") || field(item, "pubDate")
+      title: String(item.title || ""),
+      author: item.author_name || item.author || "",
+      link: bookId ? `https://www.goodreads.com/book/show/${bookId}` : item.link || "",
+      cover: item.book_image_url || item.image_url || "",
+      rating: Number(item.user_rating) || 0,
+      dateAdded: item.user_date_added || item.pubDate || ""
     };
   }).filter((book) => book.title && book.link);
 }

@@ -5,5 +5,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js"
+  },
+  "dependencies": {
+    "fast-xml-parser": "^5.11.1"
   }
 }
