@@ -9,6 +9,10 @@ const cache = new Map();
 const publicRoot = __dirname;
 const xmlParser = new XMLParser();
 
+function upscaleCover(url) {
+  return url.replace(/_SY\d+_/i, "_SY160_");
+}
+
 function parseItems(xml) {
   const parsed = xmlParser.parse(xml);
   const feedItems = parsed?.rss?.channel?.item || [];
@@ -20,7 +24,7 @@ function parseItems(xml) {
       title: String(item.title || ""),
       author: item.author_name || item.author || "",
       link: bookId ? `https://www.goodreads.com/book/show/${bookId}` : item.link || "",
-      cover: item.book_image_url || item.image_url || "",
+      cover: upscaleCover(item.book_image_url || item.image_url || ""),
       rating: Number(item.user_rating) || 0,
       dateAdded: item.user_date_added || item.pubDate || ""
     };
