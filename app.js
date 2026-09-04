@@ -16,7 +16,7 @@ function extractProfileId(value) {
 }
 function renderBooks(books) {
   document.querySelector("#result-count").textContent = String(books.length).padStart(2, "0");
-  recommendations.innerHTML = books.length ? books.map((book, index) => `<article class="book"><a class="book-cover" href="${escapeHtml(book.link)}" target="_blank" rel="noopener"><span class="rank">${String(index + 1).padStart(2, "0")}</span>${book.cover ? `<img src="${escapeHtml(book.cover)}" alt="" />` : ""}</a><h3><a href="${escapeHtml(book.link)}" target="_blank" rel="noopener">${escapeHtml(book.title)}</a></h3><p>${escapeHtml(book.author)}</p><div class="book-bottom"><span class="stars">★★★★★</span><span class="match-score">5 star match</span></div></article>`).join("") : "<p>No matching books found yet.</p>";
+  recommendations.innerHTML = books.length ? books.map((book, index) => `<article class="book"><a class="book-cover" href="${escapeHtml(book.link)}" target="_blank" rel="noopener"><span class="rank">${String(index + 1).padStart(2, "0")}</span>${book.cover ? `<img src="${escapeHtml(book.cover)}" alt="" />` : ""}</a><div class="book-details"><h3><a href="${escapeHtml(book.link)}" target="_blank" rel="noopener">${escapeHtml(book.title)}</a></h3><p>${escapeHtml(book.author)}</p><div class="book-bottom"><span class="stars">★★★★★</span><span class="match-score">5 star match</span></div></div></article>`).join("") : "<p>No matching books found yet.</p>";
 }
 renderBooks([]);
 form.addEventListener("submit", (event) => {
