@@ -98,4 +98,22 @@ const server = http.createServer(async (request, response) => {
   serveStatic(response, url.pathname);
 });
 
+let shuttingDown = false;
+function shutdown(signal) {
+  if (shuttingDown) return;
+  shuttingDown = true;
+  console.log(`Received ${signal}, shutting down...`);
+  server.close((error) => {
+    if (error) {
+      console.error("Failed to close the server cleanly.", error);
+      process.exitCode = 1;
+      return;
+    }
+    console.log("Goodgifts shut down.");
+  });
+}
+
+process.once("SIGINT", () => shutdown("SIGINT"));
+process.once("SIGTERM", () => shutdown("SIGTERM"));
+
 server.listen(port, () => console.log(`Goodgifts listening on http://localhost:${port}`));
