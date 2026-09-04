@@ -8,9 +8,9 @@ Run locally with:
 npm start
 ```
 
-The current UI uses curated demo recommendations. Goodreads data fetching will need a backend integration because profile shelves and wishlists should not be accessed directly from a browser.
+The Node.js service serves the UI and proxies Goodreads RSS requests, avoiding browser CORS restrictions. It fetches all pages (`per_page=100`) and caches each public shelf in memory for five minutes. Enter two numeric Goodreads profile IDs to match the first user's five-star reads against the second user's `to-read` shelf.
 
-## Getting Goodreads Daata
+## Getting Goodreads Data
 
 The public API has been retired, but RSS feeds are good enough e.g:
 
